@@ -38,7 +38,7 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
       - name: Build
-        run: yarn build
+        run: VITE_BASE_URL=/opendtu-react-native-logviewer yarn build
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
