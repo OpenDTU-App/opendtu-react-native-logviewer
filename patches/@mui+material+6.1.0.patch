@@ -1,0 +1,13 @@
+diff --git a/node_modules/@mui/material/TextField/TextField.d.ts b/node_modules/@mui/material/TextField/TextField.d.ts
+index 8afd09b..d8bf0b0 100644
+--- a/node_modules/@mui/material/TextField/TextField.d.ts
++++ b/node_modules/@mui/material/TextField/TextField.d.ts
+@@ -201,7 +201,7 @@ export interface BaseTextFieldProps
+   /**
+    * The value of the `input` element, required for a controlled component.
+    */
+-  value?: unknown;
++  value?: string | number | readonly string[];
+ }
+ 
+ export interface StandardTextFieldProps
