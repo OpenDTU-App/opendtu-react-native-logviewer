@@ -38,7 +38,7 @@ const looksLikeError = (originalMsg: object): Error | false => {
   }
 };
 
-const LogFileItem: FC<LogFileItemProps> = ({ logFileItem, index, length }) => {
+const LogFileItem: FC<LogFileItemProps> = ({ logFileItem }) => {
   return (
     <Box
       display="flex"
