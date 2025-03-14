@@ -4,7 +4,7 @@ import Pre from '@/components/Pre';
 
 import type { LogFileItemType } from '@/contexts/LogFileContext';
 
-import { Box, Typography } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 
 export interface LogFileItemProps {
   logFileItem: LogFileItemType;
@@ -17,6 +17,7 @@ const looksLikeError = (originalMsg: object): Error | false => {
     let msg = originalMsg;
 
     if (typeof msg !== 'object') {
+      console.debug('looksLikeError: msg is not an object', { originalMsg });
       return false;
     }
 
@@ -25,20 +26,31 @@ const looksLikeError = (originalMsg: object): Error | false => {
     }
 
     if (!('message' in msg)) {
+      console.debug('looksLikeError: msg does not have a message property', {
+        originalMsg,
+      });
       return false;
     }
 
     if (typeof msg.message === 'string') {
+      console.debug('looksLikeError: msg.message is a string', { originalMsg });
       return msg as Error;
     }
 
     return false;
-  } catch {
+  } catch (e) {
+    console.debug(
+      'looksLikeError: error while checking if msg looks like an error',
+      e,
+      { originalMsg },
+    );
     return false;
   }
 };
 
 const LogFileItem: FC<LogFileItemProps> = ({ logFileItem }) => {
+  console.log('foo', logFileItem)
+
   return (
     <Box
       display="flex"
@@ -57,6 +69,8 @@ const LogFileItem: FC<LogFileItemProps> = ({ logFileItem }) => {
               .filter(msg => !!msg)
               .map((msg, index) => {
                 const error = looksLikeError(msg);
+
+                console.log(error);
 
                 if (error) {
                   return (
@@ -80,6 +94,7 @@ const LogFileItem: FC<LogFileItemProps> = ({ logFileItem }) => {
           <Box>{logFileItem.msg}</Box>
         )}
       </Box>
+      <Divider />
       <Box>{logFileItem.timestamp}</Box>
     </Box>
   );
