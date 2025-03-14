@@ -53,24 +53,28 @@ const LogFileItem: FC<LogFileItemProps> = ({ logFileItem }) => {
       <Box>
         {Array.isArray(logFileItem.rawMsg) ? (
           <Box>
-            {logFileItem.rawMsg.map((msg, index) => {
-              const error = looksLikeError(msg);
+            {logFileItem.rawMsg
+              .filter(msg => !!msg)
+              .map((msg, index) => {
+                const error = looksLikeError(msg);
 
-              if (error) {
-                return (
-                  <Box key={index}>
-                    <Typography color="error">{error.message}</Typography>
-                    <Pre>{error.stack}</Pre>
-                  </Box>
-                );
-              } else {
-                return (
-                  <Box key={index}>
-                    <Typography>{JSON.stringify(msg, null, 2)}</Typography>
-                  </Box>
-                );
-              }
-            })}
+                if (error) {
+                  return (
+                    <Box key={index}>
+                      <Typography color="error">{error.message}</Typography>
+                      <Pre>{error.stack || 'No stack available'}</Pre>
+                    </Box>
+                  );
+                } else {
+                  return (
+                    <Box key={index}>
+                      <pre style={{ margin: 0 }}>
+                        {index + 1}. {JSON.stringify(msg)}
+                      </pre>
+                    </Box>
+                  );
+                }
+              })}
           </Box>
         ) : (
           <Box>{logFileItem.msg}</Box>
